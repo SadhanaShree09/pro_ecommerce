@@ -6,9 +6,19 @@ exports.getProducts = async (req,res,next) =>{
         products
     })
 }
-exports.getSingleProduct = (req,res,next) =>{
-    res.json({
-        success : true,
-        message : 'Get Single Product working'
-    })
+exports.getSingleProduct = async (req,res,next) =>{
+    try{
+        const product = await ProductModel.findById(req.params.id);
+        res.json({
+            success : true,
+            product
+        })
+    }
+    catch(error){
+        res.status(404).json({
+            success : false,
+            message : error.message
+        })
+    }
 }
+
