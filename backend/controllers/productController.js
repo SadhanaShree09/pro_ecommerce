@@ -1,6 +1,12 @@
 const ProductModel = require('../models/productModels');
 exports.getProducts = async (req,res,next) =>{
-    const products = await ProductModel.find({});
+    const query = req.query.keyword?{
+        name : {
+            $regex : req.query.keyword,
+            $options : 'i'
+        }
+    }:{}
+    const products = await ProductModel.find(query);
     res.json({
         success : true,
         products
