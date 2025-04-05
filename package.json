@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SadhanaShree09/pro_ecommerce/issues"
   },
-  "homepage": "https://github.com/SadhanaShree09/pro_ecommerce#readme"
+  "homepage": "https://github.com/SadhanaShree09/pro_ecommerce#readme",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }
