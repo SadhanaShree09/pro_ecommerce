@@ -10,18 +10,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cart from './pages/Cart';
 
 function App() {
-  const [cartItems, setCartItems]=useState([]);
+  const [cartItems, setCartItems]=useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('ecomcart') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  const updateCart = (items) => {
+    setCartItems(items);
+    localStorage.setItem('ecomcart', JSON.stringify(items));
+  };
+
+  const cartQuantity = cartItems.reduce((total, item) => total + item.qty, 0);
+
   return (
     <div className="App">
       <Router>
         <div>
           <ToastContainer theme='dark' position='top-center'/>
-        <Header cartItems={cartItems}/>
+        <Header cartQuantity={cartQuantity}/>
         <Routes>
           <Route path="/" element = { <Home />}/>
           <Route path="/search" element = { <Home />}/>
-          <Route path="/product/:id" element = { <ProductDetail cartItems={cartItems} setCartItems={setCartItems} />}/>
-          <Route path="/cart" element = { <Cart cartItems={cartItems} setCartItems={setCartItems} />}/>
+          <Route path="/product/:id" element = { <ProductDetail cartItems={cartItems} setCartItems={updateCart} />}/>
+          <Route path="/cart" element = { <Cart cartItems={cartItems} setCartItems={updateCart} />}/>
 
         </Routes>
         </div>

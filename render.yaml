@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ecomcart-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_URL
+        sync: false
+
+  - type: web
+    name: ecomcart-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://ecomcart-api.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

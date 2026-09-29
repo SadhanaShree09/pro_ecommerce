@@ -15,6 +15,10 @@ app.use(express.json());
 app.use('/api/v1/',products);
 app.use('/api/v1/',orders);
 
-app.listen(process.env.PORT,() =>{
+app.get('/api/v1/health', (req, res) => {
+    res.json({ success: true, service: 'ecomcart-api' });
+});
+
+app.listen(process.env.PORT || 8000,() =>{
     console.log(`server listening in port ${process.env.PORT} in ${process.env.NODE_ENV}`)
 });
