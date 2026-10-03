@@ -2,15 +2,15 @@ import Home from './pages/Home';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProductDetail from './pages/ProductDetail';
 import { useState } from 'react';
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from './pages/Cart';
 
 function App() {
-  const [cartItems, setCartItems]=useState(() => {
+  const [cartItems, setCartItems] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('ecomcart') || '[]');
     } catch {
@@ -27,21 +27,16 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <div>
-          <ToastContainer theme='dark' position='top-center'/>
-        <Header cartQuantity={cartQuantity}/>
+      <BrowserRouter>
+        <ToastContainer theme="dark" position="top-center" />
+        <Header cartQuantity={cartQuantity} />
         <Routes>
-          <Route path="/" element = { <Home />}/>
-          <Route path="/search" element = { <Home />}/>
-          <Route path="/product/:id" element = { <ProductDetail cartItems={cartItems} setCartItems={updateCart} />}/>
-          <Route path="/cart" element = { <Cart cartItems={cartItems} setCartItems={updateCart} />}/>
-
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetail cartItems={cartItems} setCartItems={updateCart} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={updateCart} />} />
         </Routes>
-        </div>
-      </Router>
-      
-     
+      </BrowserRouter>
       <Footer/>
     </div>
   );
