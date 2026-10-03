@@ -29,3 +29,23 @@ REACT_APP_API_URL=https://<your-render-api-url>/api/v1
 Then redeploy the frontend. Do not use `localhost` for this value. If the API health URL does not return `{ "success": true, ... }`, fix or redeploy the Render backend first. The backend also needs a hosted MongoDB `DB_URL`; the local MongoDB value in `backend/config/config.env` cannot work on Render.
 
 The static-site rewrite in `render.yaml` keeps React routes such as `/product/:id` working after a refresh.
+
+## Vercel backend
+
+The backend can also be deployed as a Vercel serverless project:
+
+1. Create a second Vercel project from the same GitHub repository.
+2. Set **Root Directory** to `backend`.
+3. Set the framework preset to **Other**.
+4. Add this environment variable in Vercel for Production:
+
+```
+DB_URL=your_mongodb_atlas_connection_string
+NODE_ENV=production
+```
+
+5. Deploy the project. Vercel will use `backend/api/[...path].js` to forward API requests to Express.
+6. Test `https://<backend-project>.vercel.app/api/v1/health`.
+7. In the frontend Vercel project, set `REACT_APP_API_URL` to `https://<backend-project>.vercel.app/api/v1`, then redeploy the frontend.
+
+Use MongoDB Atlas or another hosted MongoDB database. The local MongoDB URL in `backend/config/config.env` cannot be used by Vercel.
