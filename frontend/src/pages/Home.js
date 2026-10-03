@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiUrl } from "../config";
 
 export default function Home() {
 
@@ -21,7 +22,7 @@ export default function Home() {
     useEffect(()=> {
       setLoading(true);
       setError('');
-      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1'}/products?${searchParams}`)
+      fetch(apiUrl(`/products?${searchParams}`))
       .then(res=>res.ok ? res.json() : Promise.reject(new Error('Unable to load products.')))
       .then(res=>setProducts(res.products || []))
       .catch(() => {

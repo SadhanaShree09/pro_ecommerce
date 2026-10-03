@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiUrl } from "../config";
 export default function Cart({cartItems,setCartItems}){
     const [complete,setComplete]= useState(false);
     const [placingOrder, setPlacingOrder] = useState(false);
@@ -42,7 +43,7 @@ export default function Cart({cartItems,setCartItems}){
 
     function placeOrder (){
         setPlacingOrder(true);
-        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1'}/order`,{
+        fetch(apiUrl('/order'),{
             method : "POST",
             headers : {'Content-Type':'application/json'},
             body : JSON.stringify(cartItems)

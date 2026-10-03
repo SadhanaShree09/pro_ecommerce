@@ -1,6 +1,7 @@
 import { useState ,useEffect} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiUrl } from "../config";
 
 export default function ProductDetail({cartItems,setCartItems}){
     const [product,setProduct]= useState(null);
@@ -10,7 +11,7 @@ export default function ProductDetail({cartItems,setCartItems}){
     const {id}=useParams();
     const navigate = useNavigate();
     useEffect(()=> {
-                    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1'}/products/${id}`)
+                    fetch(apiUrl(`/products/${id}`))
                     .then(res=>res.ok ? res.json() : Promise.reject(new Error('Product not found.')))
                     .then (res=>setProduct(res.product))
                     .catch(() => setError('This product could not be loaded.'))
